@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arrow Key Grid Game</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f0f0f0;
+      margin: 0;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(10, 40px);
+      grid-template-rows: repeat(10, 40px);
+      gap: 2px;
+      background-color: #ccc;
+      padding: 5px;
+    }
+    .cell {
+      width: 40px;
+      height: 40px;
+      background-color: white;
+      border: 1px solid #ddd;
+    }
+    .player {
+      background-color: royalblue;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid" id="grid"></div>
+
+  <script>
+    const grid = document.getElementById("grid");
+    const size = 10;
+    let playerX = 0;
+    let playerY = 0;
+
+    // Create 100 cells
+    const cells = [];
+    for (let i = 0; i < size * size; i++) {
+      const cell = document.createElement("div");
+      cell.classList.add("cell");
+      grid.appendChild(cell);
+      cells.push(cell);
+    }
+
+    function updatePlayerPosition() {
+      cells.forEach(cell => cell.classList.remove("player"));
+      const index = playerY * size + playerX;
+      cells[index].classList.add("player");
+    }
+
+    document.addEventListener("keydown", (e) => {
+      switch (e.key) {
+        case "ArrowUp":
+          if (playerY > 0) playerY--;
+          break;
+        case "ArrowDown":
+          if (playerY < size - 1) playerY++;
+          break;
+        case "ArrowLeft":
+          if (playerX > 0) playerX--;
+          break;
+        case "ArrowRight":
+          if (playerX < size - 1) playerX++;
+          break;
+      }
+      updatePlayerPosition();
+    });
+
+    updatePlayerPosition();
+  </script>
+</body>
+</html>
